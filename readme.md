@@ -32,4 +32,3 @@ python board.py
 ```
 
 
-###Works with python 2.7, need to change print statement for working with python 3
