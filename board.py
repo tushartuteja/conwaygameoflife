@@ -124,6 +124,8 @@ class Board:
 class TestBoard(unittest.TestCase):
 	def test_block_pattern(self):
 		b = Board()
+		b.seed([(1,1),(1,2),(2,1),(2,2)])
+
 		self.assertEqual(b.state,set([(1,1),(1,2),(2,1),(2,2)]))
 		b.tick()
 		self.assertEqual(b.state,set([(1,1),(1,2),(2,1),(2,2)]))
