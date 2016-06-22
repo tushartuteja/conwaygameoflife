@@ -22,3 +22,14 @@ b.tick()
 b.state # to get state the state according to new conditions
 
 ```
+
+##Testing code
+Run the following to test if everything is working fine, the test cases are for boat, block , oscillator and toad pattern.
+
+```sh 
+python board.py
+
+```
+
+
+###Works with python 2.7, need to change print statement for working with python 3
