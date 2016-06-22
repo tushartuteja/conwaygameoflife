@@ -117,7 +117,7 @@ class TestBoard(unittest.TestCase):
 	def test_origin_cell(self):
 		b = Board()
 		b.seed([(0,0)])
-		self.assertEqual(b.state,set([0,0]))
+		self.assertEqual(b.state,set([(0,0)]))
 		b.tick()
 		self.assertEqual(b.state,set([]))
 
