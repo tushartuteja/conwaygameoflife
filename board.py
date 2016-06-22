@@ -59,10 +59,10 @@ class Board:
 	def tick(self):
 		#Define new state
 		new_state = set()
-		new_xleft = self.xleft
-		new_xright = self.xright
-		new_yleft = self.yleft
-		new_yright = self.yright
+		new_xleft = 0
+		new_xright = 0
+		new_yleft = 0
+		new_yright = 0
 
 		#iterate through the virtual grid
 		for idx in range(self.xleft,self.xright + 1):
@@ -114,6 +114,12 @@ class Board:
 		return neighbours
 
 class TestBoard(unittest.TestCase):
+	def test_origin_cell(self):
+		b = Board()
+		b.seed([(0,0)])
+		b.tick()
+		self.assertEqual(b.state,set([]))
+
 	def test_block_pattern(self):
 		b = Board()
 		b.seed([(1,1),(1,2),(2,1),(2,2)])
