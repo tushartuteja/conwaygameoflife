@@ -11,7 +11,7 @@ class Board:
 	Methods:
 	set(x,y): set the given cell to live
 	tick: takes the board to the next generation
-	get_state(left,right,axis): a method to give coordinates to expand virtual grid
+	__get_state(left,right,axis): a method to give coordinates to expand virtual grid
 
 	"""
 
@@ -39,8 +39,8 @@ class Board:
 		self.state.add((xdx,ydx))
 		#upgrade grid size if required
 	
-		self.xleft,self.xright = self.get_state(self.xleft,self.xright,xdx)
-		self.yleft,self.yright = self.get_state(self.yleft,self.yright,ydx)
+		self.xleft,self.xright = self.__get_state(self.xleft,self.xright,xdx)
+		self.yleft,self.yright = self.__get_state(self.yleft,self.yright,ydx)
 	
 
 	def seed(self,cell_list):
@@ -50,7 +50,7 @@ class Board:
 			self.set(cell[0],cell[1])
 
 
-	def get_state(self,left, right, axis):
+	def __get_state(self,left, right, axis):
 		""" Helper Function to help maintain boundary of the 
 		board """
 		if axis > left and axis < right :
@@ -72,7 +72,7 @@ class Board:
 		for idx in range(self.xleft,self.xright + 1):
 			for ydx in range(self.yleft, self.yright + 1):
 				#count neighbouring cells
-				neighbours = self.get_neighbours(idx,ydx)
+				neighbours = self.__get_neighbours(idx,ydx)
 				live_neighbours = 0 
 				for neighbour in neighbours:
 					if neighbour in self.state:
@@ -93,8 +93,8 @@ class Board:
 						
 				#upgrade grid size if required
 				if new_cell:				
-					new_xleft,new_xright = self.get_state(new_xleft,new_xright,idx)
-					new_yleft,new_yright = self.get_state(new_yleft,new_yright,ydx)
+					new_xleft,new_xright = self.__get_state(new_xleft,new_xright,idx)
+					new_yleft,new_yright = self.__get_state(new_yleft,new_yright,ydx)
 
 
 		self.state = new_state
@@ -107,7 +107,7 @@ class Board:
 
 
 
-	def get_neighbours(self, idx, ydx):
+	def __get_neighbours(self, idx, ydx):
 		neighbours = set()
 		neighbours.add((idx+1 , ydx+1))
 		neighbours.add((idx-1 , ydx+1))
@@ -124,7 +124,6 @@ class Board:
 class TestBoard(unittest.TestCase):
 	def test_block_pattern(self):
 		b = Board()
-		b.seed([(1,1),(1,2),(2,1),(2,2)])
 		self.assertEqual(b.state,set([(1,1),(1,2),(2,1),(2,2)]))
 		b.tick()
 		self.assertEqual(b.state,set([(1,1),(1,2),(2,1),(2,2)]))
@@ -146,8 +145,6 @@ class TestBoard(unittest.TestCase):
 		self.assertEqual(b.state,set(one_state))
 		b.tick()
 		self.assertEqual(b.state,set(zero_state))
-
-
 
 	def test_toad_pattern(self):
 		b = Board()
