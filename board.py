@@ -17,11 +17,9 @@ class Board:
 
 	def __init__(self, birth = (3,), survive = (2,3) ):
 		""" Initialise with birth condtioions and survival conditions"""
-
 		self.state = set()
 
 		# The following 4 variables define boundary of virtual grid
-
 		self.xright = 0
 		self.yright = 0
 		self.xleft = 0
@@ -35,17 +33,15 @@ class Board:
 
 	def set(self,xdx,ydx):
 		""" xdx and ydx coordinates of the live cell"""
-
 		self.state.add((xdx,ydx))
+		
 		#upgrade grid size if required
-	
 		self.xleft,self.xright = self.__get_state(self.xleft,self.xright,xdx)
 		self.yleft,self.yright = self.__get_state(self.yleft,self.yright,ydx)
 	
 
 	def seed(self,cell_list):
 		""" Helper function which takes a list of live cells to iniatilise the grid"""
-
 		for cell in cell_list:
 			self.set(cell[0],cell[1])
 
@@ -71,6 +67,7 @@ class Board:
 		#iterate through the virtual grid
 		for idx in range(self.xleft,self.xright + 1):
 			for ydx in range(self.yleft, self.yright + 1):
+				
 				#count neighbouring cells
 				neighbours = self.__get_neighbours(idx,ydx)
 				live_neighbours = 0 
@@ -79,6 +76,7 @@ class Board:
 						live_neighbours += 1
 
 				new_cell = False
+				
 				#what to do if the cell was alive
 				if (idx,ydx) in self.state:
 					if live_neighbours in self.survive:
@@ -102,11 +100,7 @@ class Board:
 		self.xright = new_xright
 		self.yleft = new_yleft
 		self.yright = new_yright
-
-
-
-
-
+		
 	def __get_neighbours(self, idx, ydx):
 		neighbours = set()
 		neighbours.add((idx+1 , ydx+1))
@@ -119,13 +113,10 @@ class Board:
 		neighbours.add((idx-1 , ydx-1))
 		return neighbours
 
-
-
 class TestBoard(unittest.TestCase):
 	def test_block_pattern(self):
 		b = Board()
 		b.seed([(1,1),(1,2),(2,1),(2,2)])
-
 		self.assertEqual(b.state,set([(1,1),(1,2),(2,1),(2,2)]))
 		b.tick()
 		self.assertEqual(b.state,set([(1,1),(1,2),(2,1),(2,2)]))
@@ -158,9 +149,6 @@ class TestBoard(unittest.TestCase):
 		self.assertEqual(b.state,set(one_state))
 		b.tick()
 		self.assertEqual(b.state,set(zero_state))
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
