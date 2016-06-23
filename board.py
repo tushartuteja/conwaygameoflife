@@ -20,10 +20,10 @@ class Board:
 		self.state = set()
 
 		# The following 4 variables define boundary of virtual grid
-		self.xright = 0
-		self.yright = 0
-		self.xleft = 0
-		self.yleft = 0
+		self.xright = None
+		self.yright = None
+		self.xleft = None
+		self.yleft = None
 
 		#conditions in which a dead cell will take birth
 		self.birth = birth
@@ -49,6 +49,11 @@ class Board:
 	def __get_state(self,left, right, axis):
 		""" Helper Function to help maintain boundary of the 
 		board """
+		if left is None and right is None:
+			left = axis - 1
+			right = axis + 1
+			return left,right
+
 		if axis > left and axis < right :
 			return left,right
 		elif axis >= right:
@@ -59,10 +64,10 @@ class Board:
 	def tick(self):
 		#Define new state
 		new_state = set()
-		new_xleft = 0
-		new_xright = 0
-		new_yleft = 0
-		new_yright = 0
+		new_xleft = None
+		new_xright = None
+		new_yleft = None
+		new_yright = None
 
 		#iterate through the virtual grid
 		for idx in range(self.xleft,self.xright + 1):
